@@ -15,8 +15,11 @@
     {% if prism == true %}
       <link rel="stylesheet" type="text/css" href="/static/css/prism-tomorrow.css">
     {% endif %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="bg-bluetick bg-center bg-no-repeat h-screen bg-cover">
     {% include "./partials/navbar.html" %}
 
     {{ content | safe }}

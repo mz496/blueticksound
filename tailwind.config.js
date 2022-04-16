@@ -6,6 +6,12 @@ module.exports = {
     },
     extend: {
       colors: {},
+      backgroundImage: {
+        'bluetick': "url('/static/img/bluetick-bg-3950-2800.jpeg')",
+      },
+      fontFamily: {
+        'rubik-mono-one': ['"Rubik Mono One"', 'sans-serif']
+      },
       typography: {
         DEFAULT: {
           css: {
