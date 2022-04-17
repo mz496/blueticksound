@@ -12,6 +12,12 @@ module.exports = {
       fontFamily: {
         'rubik-mono-one': ['"Rubik Mono One"', 'sans-serif']
       },
+      height: {
+        'webkit-fill-available': '-webkit-fill-available'
+      },
+      minHeight: {
+        'webkit-fill-available': '-webkit-fill-available'
+      },
       typography: {
         DEFAULT: {
           css: {

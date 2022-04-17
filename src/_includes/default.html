@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-webkit-fill-available">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-bluetick bg-center bg-no-repeat h-full bg-cover">
+  <body class="bg-bluetick bg-center bg-no-repeat w-full min-h-full min-h-webkit-fill-available bg-cover">
     {% include "./partials/navbar.html" %}
 
     {{ content | safe }}
