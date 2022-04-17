@@ -57,6 +57,13 @@ module.exports = function (eleventyConfig) {
     return content;
   });
 
+  eleventyConfig.addGlobalData('generated', () => {
+    let now = new Date();
+    return new Intl.DateTimeFormat(
+      'en-US', { dateStyle: 'full', timeStyle: 'long' }
+    ).format(now);
+  });
+
   // Let Eleventy transform HTML files as nunjucks
   // So that we can use .html instead of .njk
   return {
