@@ -41,6 +41,7 @@ module.exports = function (eleventyConfig) {
   // Copy Image and File Folder to /_site
   eleventyConfig.addPassthroughCopy("./src/static/img");
   eleventyConfig.addPassthroughCopy("./src/static/files");
+  eleventyConfig.addPassthroughCopy("./src/static/js");
 
   // Minify HTML
   eleventyConfig.addTransform("htmlmin", function (content, outputPath) {
