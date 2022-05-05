@@ -6,7 +6,8 @@ const options = {
     ratio: 2800 / 3950
   },
   displacementMap: {
-    intensity: 20,
+    intensity: 0,
+    maxIntensity: 20,
     mouseDelay: 0.05,
     speed: 0.6,
     size: {
@@ -30,19 +31,31 @@ const calculateResourceDimensions = (windowWidth, windowHeight, bgHeightToWidthR
 
 const renderer = new PIXI.autoDetectRenderer({
   width: window.innerWidth,
-  height: window.innerHeight
+  height: window.innerHeight,
+  transparent: true,
 });
 
-document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
 
 const stage = new PIXI.Container();
 
 let bgResource = null;
 let displacementMapResource = null;
+let displacementIntensityInterval = null;
 
 const pixiLoader = new PIXI.loaders.Loader();
-pixiLoader.add("bg", options.bg.src);
-pixiLoader.add("displacementMap", options.displacementMap.src);
+pixiLoader.add("bg", options.bg.src)
+  .add("displacementMap", options.displacementMap.src);
+pixiLoader.onComplete.add(() => {
+  document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
+  document.querySelector("#pixi-renderer-container").style.opacity = 1;
+  // console.log('Done loading assets, ramping up intensity to', options.displacementMap.maxIntensity);
+  displacementIntensityInterval = setInterval(() => {
+    if (options.displacementMap.intensity < options.displacementMap.maxIntensity) {
+      options.displacementMap.intensity += 1;
+    }
+  }, 100);
+
+})
 pixiLoader.load((loader, { bg, displacementMap }) => {
   displacementMapResource = new PIXI.Sprite(displacementMap.texture);
   displacementMapResource.width = options.displacementMap.size.width;
@@ -57,9 +70,8 @@ pixiLoader.load((loader, { bg, displacementMap }) => {
   bgResource.x = ww / 2;
   bgResource.y = wh / 2;
   const resourceWidthHeight = calculateResourceDimensions(ww, wh, options.bg.ratio);
-  // Prevent black edges from showing through due to distortion
-  bgResource.height = resourceWidthHeight.height * 1.01;
-  bgResource.width = resourceWidthHeight.width * 1.01;
+  bgResource.height = resourceWidthHeight.height;
+  bgResource.width = resourceWidthHeight.width;
   bgResource.interactive = true;
   bgResource.filters = [
     new PIXI.filters.DisplacementFilter(
@@ -99,6 +111,20 @@ ticker.add(deltaTime => {
       options.displacementMap.speed +
       diffY * options.displacementMap.mouseDelay;
   }
+  if (bgResource && options.displacementMap.intensity < options.displacementMap.maxIntensity) {
+    // console.log('Intensity at', options.displacementMap.intensity, 'recreating displacement filter');
+    bgResource.filters = [
+      new PIXI.filters.DisplacementFilter(
+        displacementMapResource,
+        options.displacementMap.intensity
+      )
+    ];
+  }
+  if (options.displacementMap.intensity >= options.displacementMap.maxIntensity && displacementIntensityInterval) {
+    // console.log('Max intensity reached, clearing ramp interval');
+    clearInterval(displacementIntensityInterval);
+    displacementIntensityInterval = null;
+  }
 
   oldX = oldX + diffX * options.displacementMap.mouseDelay;
   oldY = oldY + diffY * options.displacementMap.mouseDelay;
@@ -110,9 +136,8 @@ window.addEventListener("resize", e => {
   ww = window.innerWidth;
   wh = window.innerHeight;
   const resourceWidthHeight = calculateResourceDimensions(ww, wh, options.bg.ratio);
-  // Prevent black edges from showing through due to distortion
-  bgResource.height = resourceWidthHeight.height * 1.01;
-  bgResource.width = resourceWidthHeight.width * 1.01;
+  bgResource.height = resourceWidthHeight.height;
+  bgResource.width = resourceWidthHeight.width;
   bgResource.x = ww / 2;
   bgResource.y = wh / 2;
   renderer.resize(ww, wh);
