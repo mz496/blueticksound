@@ -47,7 +47,6 @@ pixiLoader.add("bg", options.bg.src)
   .add("displacementMap", options.displacementMap.src);
 pixiLoader.onComplete.add(() => {
   document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
-  document.querySelector("#pixi-renderer-container").style.opacity = 1;
   // console.log('Done loading assets, ramping up intensity to', options.displacementMap.maxIntensity);
   displacementIntensityInterval = setInterval(() => {
     if (options.displacementMap.intensity < options.displacementMap.maxIntensity) {
