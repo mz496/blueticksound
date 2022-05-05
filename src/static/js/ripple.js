@@ -2,7 +2,6 @@ let ww = window.innerWidth;
 let wh = window.innerHeight;
 const options = {
   bg: {
-    // src: "https://res.cloudinary.com/dheeu8pj9/image/upload/v1540179278/HvSDhSJ.jpg",
     src: "/static/img/bluetick-bg-3950-2800.jpeg",
     ratio: 2800 / 3950
   },
@@ -14,14 +13,12 @@ const options = {
       height: 1000,
       width: 1000,
     },
-    src: "https://res.cloudinary.com/dheeu8pj9/image/upload/v1540179223/filter_NRM.jpg",
+    src: "/static/img/displacement-map.jpg",
     wrapMode: PIXI.WRAP_MODES.REPEAT
   }
 };
 
 const calculateResourceDimensions = (windowWidth, windowHeight, bgHeightToWidthRatio) => {
-  console.log("window", windowHeight / windowWidth, "bg", bgHeightToWidthRatio);
-
   if (windowHeight / windowWidth < bgHeightToWidthRatio) {
     // Return a width that, when accounting for bg aspect ratio, fills the entire height
     return {width: windowWidth, height: windowWidth * bgHeightToWidthRatio};
@@ -37,7 +34,6 @@ const renderer = new PIXI.autoDetectRenderer({
 });
 
 document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
-console.log(renderer.view);
 
 const stage = new PIXI.Container();
 
