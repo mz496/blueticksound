@@ -4,12 +4,12 @@ const options = {
   bg: {
     // src: "https://res.cloudinary.com/dheeu8pj9/image/upload/v1540179278/HvSDhSJ.jpg",
     src: "/static/img/bluetick-bg-3950-2800.jpeg",
-    ratio: 1080 / 1661
+    ratio: 2800/3950
   },
   displacementMap: {
-    intensity: 40,
+    intensity: 20,
     mouseDelay: 0.05,
-    speed: 1,
+    speed: 0.6,
     size: {
       height: 1000,
       width: 1000,
@@ -64,10 +64,12 @@ let oldY = 0;
 let currentY = 0;
 let currentX = 0;
 
+/*
 window.addEventListener("mousemove", e => {
   currentY = e.pageX;
   currentX = e.pageY;
 });
+*/
 
 const ticker = new PIXI.ticker.Ticker();
 ticker.stop();
