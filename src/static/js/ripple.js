@@ -36,7 +36,7 @@ const renderer = new PIXI.autoDetectRenderer({
   height: window.innerHeight
 });
 
-document.querySelector("#home-bg").appendChild(renderer.view);
+document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
 console.log(renderer.view);
 
 const stage = new PIXI.Container();
