@@ -4,7 +4,7 @@ const options = {
   bg: {
     // src: "https://res.cloudinary.com/dheeu8pj9/image/upload/v1540179278/HvSDhSJ.jpg",
     src: "/static/img/bluetick-bg-3950-2800.jpeg",
-    ratio: 2800/3950
+    ratio: 2800 / 3950
   },
   displacementMap: {
     intensity: 20,
@@ -18,6 +18,18 @@ const options = {
     wrapMode: PIXI.WRAP_MODES.REPEAT
   }
 };
+
+const calculateResourceDimensions = (windowWidth, windowHeight, bgHeightToWidthRatio) => {
+  console.log("window", windowHeight / windowWidth, "bg", bgHeightToWidthRatio);
+
+  if (windowHeight / windowWidth < bgHeightToWidthRatio) {
+    // Return a width that, when accounting for bg aspect ratio, fills the entire height
+    return {width: windowWidth, height: windowWidth * bgHeightToWidthRatio};
+  } else {
+    // Return a height that, when accounting for bg aspect ratio, fills the entire width
+    return {width: windowHeight / bgHeightToWidthRatio, height: windowHeight};
+  }
+}
 
 const renderer = new PIXI.autoDetectRenderer({
   width: window.innerWidth,
@@ -45,10 +57,13 @@ pixiLoader.load((loader, { bg, displacementMap }) => {
   bgResource = new PIXI.Sprite(bg.texture);
   bgResource.anchor.x = 0.5;
   bgResource.anchor.y = 0.5;
-  bgResource.x = (ww - 50) / 2
-  bgResource.y = (wh - 50) / 2;
-  bgResource.width = ww + 100;
-  bgResource.height = bgResource.width * options.bg.ratio;
+  // Pick up the anchor coordinate and shift it by x,y
+  bgResource.x = ww / 2;
+  bgResource.y = wh / 2;
+  const resourceWidthHeight = calculateResourceDimensions(ww, wh, options.bg.ratio);
+  // Prevent black edges from showing through due to distortion
+  bgResource.height = resourceWidthHeight.height * 1.01;
+  bgResource.width = resourceWidthHeight.width * 1.01;
   bgResource.interactive = true;
   bgResource.filters = [
     new PIXI.filters.DisplacementFilter(
@@ -64,6 +79,7 @@ let oldY = 0;
 let currentY = 0;
 let currentX = 0;
 
+// This causes the ripple to "follow" the mouse motion
 /*
 window.addEventListener("mousemove", e => {
   currentY = e.pageX;
@@ -97,9 +113,11 @@ ticker.start();
 window.addEventListener("resize", e => {
   ww = window.innerWidth;
   wh = window.innerHeight;
-  bgResource.width = ww + 100;
-  bgResource.height = bgResource.width * options.bg.ratio;
-  bgResource.x = (ww - 50) / 2
-  bgResource.y = (wh - 50) / 2;
+  const resourceWidthHeight = calculateResourceDimensions(ww, wh, options.bg.ratio);
+  // Prevent black edges from showing through due to distortion
+  bgResource.height = resourceWidthHeight.height * 1.01;
+  bgResource.width = resourceWidthHeight.width * 1.01;
+  bgResource.x = ww / 2;
+  bgResource.y = wh / 2;
   renderer.resize(ww, wh);
 });
