@@ -16,6 +16,34 @@ code {
   @apply bg-gray-100 text-blue-800 p-1;
 }
 
+@keyframes zoom-fade {
+  0% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes delayed-appear {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.zoom-fade {
+  animation: zoom-fade 1.5s cubic-bezier(.26,.54,.32,1) 0s forwards;
+}
+
+.show-after-zoom-fade {
+  animation: delayed-appear 1.5s steps(1, end) 0s forwards;
+}
+
 /* Syntax Highlighting*/
 
 body :not(pre) > code[class*="language-"],

@@ -48,11 +48,13 @@ pixiLoader.add("bg", options.bg.src)
 pixiLoader.onComplete.add(() => {
   document.querySelector("#pixi-renderer-container").appendChild(renderer.view);
   // console.log('Done loading assets, ramping up intensity to', options.displacementMap.maxIntensity);
-  displacementIntensityInterval = setInterval(() => {
-    if (options.displacementMap.intensity < options.displacementMap.maxIntensity) {
-      options.displacementMap.intensity += 1;
-    }
-  }, 100);
+  displacementIntensityInterval = setTimeout(() => {
+    setInterval(() => {
+      if (options.displacementMap.intensity < options.displacementMap.maxIntensity) {
+        options.displacementMap.intensity += 1;
+      }
+    }, 100);
+  }, 1500); // matches the time taken to fade in the canvas
 
 })
 pixiLoader.load((loader, { bg, displacementMap }) => {
