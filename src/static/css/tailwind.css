@@ -41,7 +41,7 @@ code {
 }
 
 .show-after-zoom-fade {
-  animation: delayed-appear 1.5s steps(1, end) 0s forwards;
+  animation: delayed-appear 1.5s step-end 0s forwards;
 }
 
 /* Syntax Highlighting*/
