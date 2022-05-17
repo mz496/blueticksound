@@ -53,8 +53,8 @@ pixiLoader.onComplete.add(() => {
       if (options.displacementMap.intensity < options.displacementMap.maxIntensity) {
         options.displacementMap.intensity += 1;
       }
-    }, 100);
-  }, 1500); // matches the time taken to fade in the canvas
+    }, 80);
+  }, 2000); // slightly more than the time taken to fade in the canvas
 
 })
 pixiLoader.load((loader, { bg, displacementMap }) => {
