@@ -36,6 +36,17 @@ code {
   }
 }
 
+@keyframes slide-up {
+  0% {
+    top: 20px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
 .zoom-fade {
   animation: zoom-fade 1.5s cubic-bezier(.26,.54,.32,1) 0s forwards;
 }
@@ -43,6 +54,26 @@ code {
 .show-after-zoom-fade {
   animation: delayed-appear 1.5s step-end 0s forwards;
 }
+
+.slide-up-base {
+  position: relative;
+  opacity: 0;
+  animation: slide-up 1s cubic-bezier(.26,.54,.32,1) forwards;
+}
+.slide-up-1 {
+  animation-delay: 1s;
+}
+.slide-up-2 {
+  animation-delay: 1.25s;
+}
+.slide-up-3 {
+  animation-delay: 1.5s;
+}
+.slide-up-4 {
+  animation-delay: 1.75s;
+}
+
+
 
 /* Syntax Highlighting*/
 
