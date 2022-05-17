@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
   <head>
-    <img rel="preload" as="image" href="/static/img/bluetick-bg-3950-2800-low-q.jpeg">
+    <img rel="preload" as="image" href="/static/img/bluetick-bg-3950-2800-low-q.jpeg"/>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,11 +22,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
   </head>
   <body class="h-full">
-    {% include "./partials/navbar.html" %}
+    {% if path != "home" %}
+      {% include "./partials/navbar.html" %}
+    {% endif %}
 
     {{ content | safe }}
 
-    {% include "./partials/footer.html" %}
+    {% if path != "home" %}
+      {% include "./partials/footer.html" %}
+    {% endif %}
 
     <script src="/static/js/alpine.js"></script>
 
